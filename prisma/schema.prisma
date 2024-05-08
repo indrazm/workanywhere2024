@@ -1,0 +1,46 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id String @id @default(cuid())
+  name String
+  email String
+  password String
+  verified Boolean @default(false)
+  reviews Review[]
+}
+
+model Workplace {
+  id String @id @default(cuid())
+  name String
+  description String
+  address String
+  city String
+  images String
+  published Boolean @default(false)
+  reviews Review[]
+}
+
+model Review {
+  id String @id @default(cuid())
+  comment String
+  images String
+  quiteness Int
+  toilet Int
+  ac Int
+  internet Int
+  electricity Int
+  foodQuality Int
+  foodPrice Int
+  workplaceId String
+  workplace Workplace @relation(fields: [workplaceId], references: [id])
+  userId String
+  user User @relation(fields: [userId], references: [id])
+}
